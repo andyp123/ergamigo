@@ -12,6 +12,23 @@ var csv_data = "time,distance,spm,power,pace,calhr,calories,heartrate,status,for
 function run() {
 	var json_data = parse(csv_data);
 	console.log(json_data);
+
+	var output_str = "";
+	var keys = json_data.keys;
+	var strokes = json_data.strokes;
+
+	for (var i = 0; i < strokes.length; ++i) {
+		var stroke_str = "STROKE " + i + "\n----------\n";
+		var stroke = strokes[i];
+		for (var j = 0; j < keys.length; ++j) {
+			var key = keys[j];
+			var value = stroke[key];
+			stroke_str += "\"" + key + "\" : " + value + "\n";
+		}
+		output_str += stroke_str + "\n";
+	}
+
+	document.getElementById("output").innerHTML = output_str; //JSON.stringify(json_data, null, 2);
 }
 
 function parse(str_data) {

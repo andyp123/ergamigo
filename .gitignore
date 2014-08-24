@@ -1,2 +1,5 @@
 *.pyc
+*.csv
+-example.csv
 src/logs/
+*/__pycache__/

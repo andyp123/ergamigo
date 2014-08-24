@@ -1,7 +1,7 @@
 # Simple gui application that works with pyrow to log workout
 # information sent from a connected Concept 2 rowing erg.
 
-import Tkinter  # gui kit
+# import Tkinter  # gui kit
 import pyrow    # handles connection to ergs
 import usb.core # for USBError
 import time     # for sleep
@@ -48,7 +48,7 @@ def main():
     
     # get force data and convert into normalised graph coords
     if len(workout_data) > 0:
-        plot_force_curves(workout_data, 0, len(workout_data))
+    #    plot_force_curves(workout_data, 0, len(workout_data))
         now = datetime.datetime.now()
         logdir = "./logs/"
         filename = "workout_" + now.strftime("%Y%m%d_%H%M") + ".csv"
@@ -129,43 +129,43 @@ def clamp(val, minval, maxval):
     return val
 
 
-def plot_force_curves(workout_data, first, last):
-    """Plots all force curves in a set of workout data within the specified range"""
-    first = clamp(first, 0, len(workout_data))
-    last = clamp(last, 0, len(workout_data))
+# def plot_force_curves(workout_data, first, last):
+#     """Plots all force curves in a set of workout data within the specified range"""
+#     first = clamp(first, 0, len(workout_data))
+#     last = clamp(last, 0, len(workout_data))
     
-    # create a little window with a canvas
-    top = Tkinter.Tk()
-    # top.tile("Force Curves")
-    window_width = 320
-    window_height = 256
-    canvas = Tkinter.Canvas(top, bg = "black", width = window_width, height = window_height)
+#     # create a little window with a canvas
+#     top = Tkinter.Tk()
+#     # top.tile("Force Curves")
+#     window_width = 320
+#     window_height = 256
+#     canvas = Tkinter.Canvas(top, bg = "black", width = window_width, height = window_height)
     
-    # plot first stroke in red
-    plot_force_curve(workout_data[0]['forceplot'], canvas, window_width, window_height, "red")
-    # plot other strokes in default colour
-    for stroke in range(first + 1, last):
-        force_data = workout_data[stroke]['forceplot']
-        if len(force_data) > 1:
-            plot_force_curve(force_data, canvas, window_width, window_height)
+#     # plot first stroke in red
+#     plot_force_curve(workout_data[0]['forceplot'], canvas, window_width, window_height, "red")
+#     # plot other strokes in default colour
+#     for stroke in range(first + 1, last):
+#         force_data = workout_data[stroke]['forceplot']
+#         if len(force_data) > 1:
+#             plot_force_curve(force_data, canvas, window_width, window_height)
     
-    canvas.pack()
-    top.mainloop()    
+#     canvas.pack()
+#     top.mainloop()    
     
     
-def plot_force_curve(force_data, canvas, window_width, window_height, line_color = "green"):
-    # process data into a list of x and y coordinates scaled by window size
-    plot = []
-    f_max = float(max(force_data))
-    num_points = float(len(force_data))
-    for i, f in enumerate(force_data):
-        x = float(i) / num_points * window_width
-        y = window_height - float(f) / f_max * window_height
-        plot.append(x)
-        plot.append(y)
+# def plot_force_curve(force_data, canvas, window_width, window_height, line_color = "green"):
+#     # process data into a list of x and y coordinates scaled by window size
+#     plot = []
+#     f_max = float(max(force_data))
+#     num_points = float(len(force_data))
+#     for i, f in enumerate(force_data):
+#         x = float(i) / num_points * window_width
+#         y = window_height - float(f) / f_max * window_height
+#         plot.append(x)
+#         plot.append(y)
 
-    # plot the force curve
-    canvas.create_line(plot, fill = line_color)
+#     # plot the force curve
+#     canvas.create_line(plot, fill = line_color)
 
 
 def log_workout(erg, workout):
