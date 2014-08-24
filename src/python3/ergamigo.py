@@ -8,9 +8,6 @@ import pyrow    # handles connection to ergs
 import usb.core # for USBError
 import time     # for sleep
 import datetime # for getting date and time (write to logs)
-# server
-import asyncio    # required by websockets
-import websockets # for websockets
 
 def main():
     print("Welcome to ErgAmigo!")
@@ -172,20 +169,6 @@ def log_workout(erg, workout):
 
 
 main()
-
-@asyncio.coroutine
-def rowserver(websocket, path):
-    name = yield from websocket.recv()
-    print("< {}".format(name))
-    greeting = "Hello {}!".format(name)
-    yield from websocket.send(greeting)
-    print("> {}".format(greeting))
-
-def server():
-    start_server = websockets.serve(rowserver, 'localhost', 8765)
-    asyncio.get_event_loop().run_until_complete(start_server)
-    asyncio.get_event_loop().run_forever()
-
 
 def test():
     workout_data = import_workout_data("test.csv")
