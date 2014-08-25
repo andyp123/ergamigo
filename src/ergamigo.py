@@ -13,19 +13,33 @@ import asyncio    # required by websockets
 import websockets # for websockets server code
 import json       # for converting data into json strings
 
+
+# =============================================================================
+# ONLINE FUNCTIONS
+# =============================================================================
+@asyncio.coroutine
+def send_message(websocket, msg_content, msg_type="TXT", log=True):
+    """package a message and send it to a websocket client"""
+    message = { "type": msg_type, "content": msg_content }
+    message_json = json.dumps(message)
+
+    if log is True:
+        print("[SEND] " + message_json, end="")
+    yield from websocket.send(message_json)
+    if log is True:
+        print(" [OK]")
+
 # server version
 @asyncio.coroutine
 def server(websocket, path):
-    print("Client connected")
+    print("Client connected")      
 
-    message = "Welcome to ErgAmigo Server!"
-    yield from websocket.send(message)
+    yield from send_message(websocket, "Welcome to ErgAmigo Server!", log=False)
 
     connected_ergs = pyrow.find()
     if len(connected_ergs) == 0:
         message = "No ergs found."
-        print(message)
-        yield from websocket.send(message)
+        yield from send_message(websocket, message)
     else:
         try:
             erg = pyrow.pyrow(connected_ergs[0])
@@ -33,14 +47,11 @@ def server(websocket, path):
             erg_status = pyrow.pyrow.getStatus(erg)
 
             message = "Concept 2 erg connected (model {}, serial: {})".format(erg_info['model'], erg_info['serial'])
-            print(message)
-            yield from websocket.send(message)
+            yield from send_message(websocket, message)
 
             # wait for workout to begin, then send stroke data
             workout = erg.getWorkout()
-            message = "Waiting for workout to begin..."
-            print(message)
-            yield from websocket.send(message)
+            yield from send_message(websocket, "Waiting for workout to begin...")
             while workout['state'] == 0:
                 time.sleep(1)
                 workout = erg.getWorkout()
@@ -68,18 +79,15 @@ def server(websocket, path):
                     force.extend(forceplot['forceplot'])
 
                 stroke_count += 1
+                stroke = { 'id' : stroke_count, 'monitor' : monitor, 'forceplot' : force }
+                yield from send_message(websocket, stroke, msg_type="STROKE", log=False)
+                print("[{}] time: {}, distance: {}, pace: {}".format(stroke_count, monitor['time'], monitor['distance'], monitor['pace']))
                 
-                message = "[{}] time: {}, distance: {}, pace: {}".format(stroke_count, monitor['time'], monitor['distance'], monitor['pace'])
-                print(message)
-                yield from websocket.send(message)
-
-
         except usb.core.USBError as e:
             print("Error reading data from connected erg.")
             exit(e)
 
-    message = "ErgAmigo Server closing. See you next time!"
-    yield from websocket.send(message)
+    yield from send_message(websocket, "ErgAmigo Server closing. See you next time!", log=False)
     websocket.close()
     print("Client disconnected")
 
@@ -88,9 +96,10 @@ start_server = websockets.serve(server, 'localhost', 8765)
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
 
-exit("Exiting Python")
 
-# non-server version
+# =============================================================================
+# OFFLINE FUNCTIONS
+# =============================================================================
 def main():
     print("Welcome to ErgAmigo!")
     # find any connected ergs

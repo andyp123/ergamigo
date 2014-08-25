@@ -31,7 +31,13 @@
 			writeToScreen("DISCONNECTED");
 		}
 		function onMessage(evt) {
-			writeToScreen('<span style="color: blue;">' + evt.data+'</span>');
+			msg = JSON.parse(evt.data);
+			if (msg.type == "TXT") {
+				writeToScreen('<span style="color: blue;">' + msg.content +'</span>');
+			} else {
+				writeToScreen('<span style="color: blue;">' + msg.type + ' : [OBJECT DATA]</span>');
+				console.log(msg);
+			}
 		}
 		function onError(evt) {
 			writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
