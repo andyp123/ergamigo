@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-# Simple gui application that works with pyrow to log workout
-# information sent from a connected Concept 2 rowing erg.
+# Simple console application that works with pyrow to send data retrieved from
+# a connected Concept 2 rowing erg to a client via websockets.
 
 # core
 import pyrow    # handles connection to ergs
@@ -24,7 +24,7 @@ def send_message(websocket, msg_content, msg_type="TXT", log=True):
     message_json = json.dumps(message)
 
     if log is True:
-        print("[SEND] " + message_json, end="")
+        print("[SEND ({} bytes)] {}".format(len(message_json), message_json), end="")
     yield from websocket.send(message_json)
     if log is True:
         print(" [OK]")
@@ -36,6 +36,7 @@ def server(websocket, path):
 
     yield from send_message(websocket, "Welcome to ErgAmigo Server!", log=False)
 
+    sleep_time = 1.0 / 1000.0 # 1 ms
     connected_ergs = pyrow.find()
     if len(connected_ergs) == 0:
         message = "No ergs found."
@@ -45,46 +46,62 @@ def server(websocket, path):
             erg = pyrow.pyrow(connected_ergs[0])
             erg_info = pyrow.pyrow.getErg(erg)
             erg_status = pyrow.pyrow.getStatus(erg)
+            erg_id = erg_info['serial']
 
-            message = "Concept 2 erg connected (model {}, serial: {})".format(erg_info['model'], erg_info['serial'])
+            message = "Concept 2 erg connected (model {}, serial: {})".format(erg_info['model'], erg_id)
             yield from send_message(websocket, message)
 
             # wait for workout to begin, then send stroke data
-            workout = erg.getWorkout()
             yield from send_message(websocket, "Waiting for workout to begin...")
+
+            workout = erg.getWorkout()
             while workout['state'] == 0:
-                time.sleep(1)
+                time.sleep(sleep_time)
                 workout = erg.getWorkout()
 
+            monitor = erg.getMonitor()
+            yield from send_message(websocket, { 'erg_id' : erg_id, 'monitor' : monitor, 'workout' : workout }, msg_type="WORKOUT_START")
+
             # record workout
-            stroke_count = 0
+            stroke_id = 0
+            forceplot = erg.getForcePlot()
             while workout['state'] == 1:
-                forceplot = erg.getForcePlot()
-                # wait for the start of the drive
+                # record force data during the drive
+                force = forceplot['forceplot']  # start of pull (when strokestate first changed to 2)
+                monitor = erg.getMonitor()
+
+                # stroke start message
+                yield from send_message(websocket, { 'erg_id' : erg_id, 'stroke_id' : stroke_id, 'monitor': monitor }, msg_type="STROKE_START", log=False)
+                yield from send_message(websocket, { 'erg_id' : erg_id, 'stroke_id' : stroke_id, 'force' : forceplot['forceplot'] }, msg_type="STROKE_FORCE", log=False)
+                
+                # loop during drive (and make sure we get the end of the stroke)
+                while True:
+                    monitor = erg.getMonitor()
+                    forceplot = erg.getForcePlot()
+                    force.extend(forceplot['forceplot'])
+                    yield from send_message(websocket, { 'erg_id' : erg_id, 'stroke_id' : stroke_id, 'time' : monitor['time'], 'forceplot' : forceplot['forceplot'] }, msg_type="STROKE_FORCE", log=False)
+                    if forceplot['strokestate'] != 2:
+                        break
+
+                monitor = erg.getMonitor()      # get monitor data for end of stroke
+                yield from send_message(websocket, { 'erg_id' : erg_id, 'stroke_id' : stroke_id, 'monitor' : monitor, 'forceplot' : force }, msg_type="STROKE_END", log=False)
+
+                print("[{}] time: {}, distance: {}, pace: {}".format(stroke_id, monitor['time'], monitor['distance'], monitor['pace']))
+
+                # wait for next stroke
                 while forceplot['strokestate'] != 2 and workout['state'] == 1:
                     forceplot = erg.getForcePlot()
                     workout = erg.getWorkout()
-                
-                # record force data during the drive
-                force = forceplot['forceplot']  # start of pull (when strokestate first changed to 2)
-                monitor = erg.getMonitor()      # get monitor data for start of stroke
-                
-                # loop during drive
-                while forceplot['strokestate'] == 2:
-                    forceplot = erg.getForcePlot()
-                    force.extend(forceplot['forceplot'])
-                else:
-                    # get force data from end of stroke
-                    forceplot = erg.getForcePlot()
-                    force.extend(forceplot['forceplot'])
 
-                stroke_count += 1
-                stroke = { 'id' : stroke_count, 'monitor' : monitor, 'forceplot' : force }
-                yield from send_message(websocket, stroke, msg_type="STROKE", log=False)
-                print("[{}] time: {}, distance: {}, pace: {}".format(stroke_count, monitor['time'], monitor['distance'], monitor['pace']))
-                
+                stroke_id += 1
+
+            workout = erg.getWorkout()
+            monitor = erg.getMonitor()
+            yield from send_message(websocket, { 'erg_id' : erg_id, 'monitor' : monitor, 'workout' : workout }, msg_type="WORKOUT_END")
+
         except usb.core.USBError as e:
-            print("Error reading data from connected erg.")
+            yield from send_message(websocket, "Error reading data from erg. Closing connection.")
+            websocket.close()
             exit(e)
 
     yield from send_message(websocket, "ErgAmigo Server closing. See you next time!", log=False)

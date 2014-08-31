@@ -1,0 +1,542 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ener",
+				"energy_val"
+			],
+			[
+				"get",
+				"getElementById"
+			],
+			[
+				"erg",
+				"erg_id"
+			],
+			[
+				"er",
+				"erg_id"
+			],
+			[
+				"ms",
+				"msg_type"
+			],
+			[
+				"force",
+				"forceplot"
+			],
+			[
+				"stroke",
+				"stroke_id"
+			],
+			[
+				"STROK",
+				"STROKE_FORCE"
+			],
+			[
+				"for",
+				"forceplot"
+			],
+			[
+				"sl",
+				"sleep_time"
+			],
+			[
+				"clo",
+				"close"
+			],
+			[
+				"STORKE",
+				"STROKE_END"
+			],
+			[
+				"msg",
+				"msg_json"
+			],
+			[
+				"mess",
+				"message"
+			],
+			[
+				"message",
+				"message_json"
+			],
+			[
+				"cor",
+				"coroutine"
+			],
+			[
+				"send",
+				"send_message"
+			],
+			[
+				"content",
+				"content_str"
+			],
+			[
+				"conten",
+				"content_str"
+			],
+			[
+				"conn",
+				"connected_ergs"
+			],
+			[
+				"output",
+				"output_str"
+			],
+			[
+				"add",
+				"addContactInfo"
+			],
+			[
+				"inner",
+				"innerHTML"
+			],
+			[
+				"inn",
+				"innerHTML"
+			],
+			[
+				"image",
+				"image_data"
+			],
+			[
+				"LC",
+				"LC-37GX3W"
+			],
+			[
+				"des",
+				"description"
+			],
+			[
+				"images",
+				"images_html"
+			],
+			[
+				"imaes",
+				"images_html"
+			],
+			[
+				"imges",
+				"images_html"
+			],
+			[
+				"item",
+				"item_data"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"paddin",
+				"padding-top"
+			],
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"padding",
+				"padding-top"
+			],
+			[
+				"border-top",
+				"border-top-left-radius"
+			],
+			[
+				"border-rad",
+				"border-top-left-radius"
+			],
+			[
+				"border",
+				"border-width"
+			],
+			[
+				"border-botto",
+				"border-bottom-right-radius"
+			],
+			[
+				"border-s",
+				"border-style"
+			],
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"wi",
+				"max-width"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "ergamigo.sublime-project",
+			"settings":
+			{
+				"buffer_size": 410,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
+			"settings":
+			{
+				"buffer_size": 10923,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/andy/Programming/Python/ergamigo/src/test_client.html",
+			"settings":
+			{
+				"buffer_size": 2739,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/andy/Programming/Python/ergamigo/src/todo.txt",
+			"settings":
+			{
+				"buffer_size": 1775,
+				"line_ending": "Unix",
+				"name": "todo.txt"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/andy/Programming/Python/ergamigo",
+		"/home/andy/Programming/Python/ergamigo/js_websockets",
+		"/home/andy/Programming/Python/ergamigo/src",
+		"/home/andy/Programming/Python/ergamigo/test_websockets"
+	],
+	"file_history":
+	[
+		"/home/andy/Programming/Python/ergamigo/src/pyrow.py",
+		"/home/andy/Programming/Python/ergamigo/strokelog.py",
+		"/home/andy/Programming/Python/ergamigo/statshow.py",
+		"/home/andy/Programming/Python/ergamigo/workout_data.txt",
+		"/home/andy/Programming/Python/ergamigo/_sublime/ergamigo.sublime-workspace",
+		"/home/andy/Programming/Python/ergamigo/src/test_client.html",
+		"/home/andy/Programming/Python/ergamigo/src/test_client.py",
+		"/home/andy/Programming/Python/ergamigo/README.md",
+		"/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
+		"/home/andy/Programming/Python/ergamigo/test_websockets/server_send.py",
+		"/home/andy/Programming/Python/ergamigo/test_websockets/client_receive.py",
+		"/home/andy/Programming/Python/ergamigo/src/python3/ergamigo.py",
+		"/home/andy/Programming/Python/ergamigo/readme_pyrow.txt",
+		"/home/andy/Programming/Python/ergamigo/js_websockets/index_local.html",
+		"/home/andy/Programming/Python/ergamigo/.gitignore",
+		"/home/andy/Programming/Python/ergamigo/js_websockets/index.html",
+		"/home/andy/Programming/Python/ergamigo/src/python3/workout_20140824_1835.csv",
+		"/home/andy/Programming/Python/ergamigo/src/python3/pyrow.py",
+		"/home/andy/Programming/Python/ergamigo/src/python3/workout_20140824_1829.csv",
+		"/home/andy/.cache/.fr-hy8948/row_metrics.py",
+		"/home/andy/Downloads/pyusb-1.0.0b1.xml",
+		"/home/andy/.cache/.fr-0jDzWD/statshow.py",
+		"/home/andy/.cache/.fr-fuSZfT/strokelog.py",
+		"/home/andy/Programming/Python/ergamigo/src/python3/csafe_cmd.py",
+		"/home/andy/Programming/Python/ergamigo/src/python3/csafe_dic.py",
+		"/home/andy/Programming/Python/ergamigo/js_parser/index.html",
+		"/home/andy/Programming/Python/ergamigo/js_parser/script.js",
+		"/home/andy/.cache/.fr-d51ZQB/bal_lostepisode_readme.txt",
+		"/home/andy/Programming/Python/ergamigo/src/workout_20140806_0208.csv",
+		"/home/andy/windows_7_homepremium_en_64bit/README.TXT",
+		"/home/andy/Documents/to sell/content.js",
+		"/home/andy/Documents/to sell/style.css",
+		"/home/andy/Documents/to sell/sale.html",
+		"/home/andy/Documents/to sell/script.js",
+		"/home/andy/Applications/android_adt_bundle/sdk/samples/android-19/legacy/SoftKeyboard/res/values/strings.xml",
+		"/home/andy/Desktop/style.css",
+		"/home/andy/Desktop/sale.html",
+		"/home/andy/Applications/android_adt_bundle/sdk/samples/android-19/legacy/SoftKeyboard/AndroidManifest.xml",
+		"/home/andy/Applications/android_adt_bundle/sdk/samples/android-19/legacy/SoftKeyboard/res/xml/qwerty.xml",
+		"/media/andy/0123-4567/BACKUP/Programming/Python/0_scripts/mp4_to_mp3/README.md",
+		"/home/andy/Desktop/bday.txt",
+		"/home/andy/Desktop/wank.txt",
+		"/home/andy/Desktop/plain text.txt",
+		"/home/andy/.config/mate/panel2.d/default/launchers/XnView.desktop"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"erg_status",
+			"import_workout_data",
+			"clamp",
+			"/ ",
+			"connected_ergs",
+			"find",
+			"print",
+			"print(",
+			"print",
+			"%s",
+			" \"",
+			"plot_force_curve",
+			"’",
+			"	\"",
+			"\"",
+			"			\"<"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"'"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "ergamigo.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 410,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								204,
+								204
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10923,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3622,
+								3622
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 964.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/andy/Programming/Python/ergamigo/src/test_client.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2739,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1361,
+								1389
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/andy/Programming/Python/ergamigo/src/todo.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1775,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1775,
+								1775
+							]
+						],
+						"settings":
+						{
+							"auto_name": "todo.txt",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "ergamigo.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 218.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

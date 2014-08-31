@@ -31,3 +31,12 @@ SUBSYSTEM=="usb", ATTR{idProduct}=="000?", ATTR{idVendor}=="17a4", MODE="0660", 
 To list connected usb devices and check the vendor and product codes, type 'lsusb' at the terminal.
 'lsusb -v' prints verbose information.
 To reload the udev rules, enter 'udevadm control --reload-rules' at the terminal.
+
+TODO:
+-----
++ create message format for sending data between client and server
+  - TYPE : CONTENT , where TYPE is the type of content (e.g. TEXT, STROKE_DATA, FORCE_PLOT etc.)
++ create a function to generate correctly formatted messages on the server
++ create a function to handle messages on the client
++ think about client sending messages to server to request different content etc.
++ do a simple implementation of a power graph in canvas

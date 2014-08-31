@@ -4,10 +4,15 @@
 	<script language="javascript" type="text/javascript"> 
 		var wsUri = "ws://localhost:8765/";
 		var output;
+        var energy;
+        var energy_val = 0;
 		function init() {
 			output = document.getElementById("output");
+            energy = document.getElementById("energy");
 			testWebSocket();
-		} 
+		}
+
+        var stroke_active = false;
 
 		function testWebSocket() {
 			websocket = new WebSocket(wsUri);
@@ -31,17 +36,44 @@
 			writeToScreen("DISCONNECTED");
 		}
 		function onMessage(evt) {
-			msg = JSON.parse(evt.data);
-			if (msg.type == "TXT") {
-				writeToScreen('<span style="color: blue;">' + msg.content +'</span>');
-			} else {
-				writeToScreen('<span style="color: blue;">' + msg.type + ' : [OBJECT DATA]</span>');
-				console.log(msg);
-			}
+			var msg = JSON.parse(evt.data);
+             handleMessage(msg);
 		}
 		function onError(evt) {
 			writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
 		} 
+        function handleMessage(msg) {
+            if (msg.type === "TXT") {
+                writeToScreen('<span style="color: blue;">TXT : ' + msg.content + '</span>');
+                return;
+            }
+
+            switch(msg.type) {
+            case "STROKE_END":
+                energy_val = msg.content.monitor.calories;
+                energy.innerHTML = "<p>" + energy_val + "</p>"
+                //break;
+            case "WORKOUT_START":
+                //break;
+            case "WORKOUT_END":
+                //break; 
+            default:
+                writeToScreen('<span style="color: blue;">' + msg.type + ' : [OBJECT DATA]</span>');
+                console.log(msg);
+                break;
+            }
+
+            // quick test for message ordering
+            if (msg.type === "STROKE_START") {
+                if (stroke_active) console.log("MESSAGE ORDER ERROR: new stroke when stroke not ended");
+                stroke_active = true;
+            }
+            if (msg.type === "STROKE_END") {
+                if (!stroke_active) console.log("MESSAGE ORDER ERROR: stroke end when no active stroke")
+                stroke_active = false;
+                console.log("--------------------------------------");
+            }
+        }
 		function doSend(message) {
 			writeToScreen("SENT: " + message); 
 			websocket.send(message);
@@ -56,4 +88,5 @@
 	</script>
 
 	<h2>WebSocket Test</h2>
+    <div id="energy"></div>
 	<div id="output"></div> 
