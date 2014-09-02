@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"stroke",
+				"strokeStyle"
+			],
+			[
+				"file",
+				"fillStyle"
+			],
+			[
+				"force",
+				"forceplot_ctx"
+			],
+			[
+				"forcepl",
+				"forceplot"
+			],
+			[
+				"for",
+				"forceplot_ctx"
+			],
+			[
+				"forceplot",
+				"forceplot_ctx"
+			],
+			[
 				"ener",
 				"energy_val"
 			],
@@ -24,20 +48,8 @@
 				"msg_type"
 			],
 			[
-				"force",
-				"forceplot"
-			],
-			[
-				"stroke",
-				"stroke_id"
-			],
-			[
 				"STROK",
 				"STROKE_FORCE"
-			],
-			[
-				"for",
-				"forceplot"
 			],
 			[
 				"sl",
@@ -199,7 +211,7 @@
 			"file": "/home/andy/Programming/Python/ergamigo/src/test_client.html",
 			"settings":
 			{
-				"buffer_size": 2739,
+				"buffer_size": 3823,
 				"line_ending": "Unix"
 			}
 		},
@@ -242,11 +254,13 @@
 	[
 		"/home/andy/Programming/Python/ergamigo",
 		"/home/andy/Programming/Python/ergamigo/js_websockets",
-		"/home/andy/Programming/Python/ergamigo/src",
 		"/home/andy/Programming/Python/ergamigo/test_websockets"
 	],
 	"file_history":
 	[
+		"/home/andy/Programming/Javascript/gamepad_test/index.html",
+		"/home/andy/Programming/Javascript/canvas_framework/js/system/system.js",
+		"/home/andy/Programming/Javascript/canvas_framework/js/game.js",
 		"/home/andy/Programming/Python/ergamigo/src/pyrow.py",
 		"/home/andy/Programming/Python/ergamigo/strokelog.py",
 		"/home/andy/Programming/Python/ergamigo/statshow.py",
@@ -395,7 +409,7 @@
 							"syntax": "Packages/Python/Python.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 964.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -407,15 +421,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2739,
+						"buffer_size": 3823,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1361,
-								1389
+								3020,
+								3020
 							]
 						],
 						"settings":
@@ -423,7 +437,7 @@
 							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1343.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
