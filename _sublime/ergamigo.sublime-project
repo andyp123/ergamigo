@@ -11,6 +11,7 @@
       "file_exclude_patterns":
       [
         "*.zip",
+        "*.pyc",
       ],
     }
   ],

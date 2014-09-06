@@ -5,6 +5,7 @@ Utility for logging and analysing data from Concept 2 rowers using linux and pyt
 
 Update: This is being converted to a small application that runs a server and sends messages containing information about connected ergs and data being logged by ergs to connected clients. The idea is that I can then use javascript and websockets to create a client and present a more interesting way of looking at the data.
 
+
 Requirements:
 -------------
 + Python 3.4 or greater (for websockets library)
@@ -17,6 +18,7 @@ Installation:
 -------------
 1. make sure libusb is installed. It is installed by default in many linux distros, but you need to install on osx and windows
 2. install pyusb 1.0+
+3. install the websocket and asyncio libraries for python using pip ('pip install websockets asyncio')
 3. now you can run using 'python ergamigo.py'
 
 NOTE:

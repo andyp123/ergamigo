@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"messae",
+				"message_json"
+			],
+			[
+				"send",
+				"sendJSON"
+			],
+			[
+				"ms",
+				"msg_content"
+			],
+			[
+				"msg",
+				"msg_type"
+			],
+			[
+				"mess",
+				"message_json"
+			],
+			[
+				"msg_",
+				"msg_content"
+			],
+			[
+				"pyrow",
+				"pyrow_instance"
+			],
+			[
+				"connected",
+				"connected_ergs"
+			],
+			[
+				"Simpl",
+				"SimpleWebsocketServer"
+			],
+			[
 				"stroke",
 				"strokeStyle"
 			],
@@ -44,10 +80,6 @@
 				"erg_id"
 			],
 			[
-				"ms",
-				"msg_type"
-			],
-			[
 				"STROK",
 				"STROKE_FORCE"
 			],
@@ -64,24 +96,12 @@
 				"STROKE_END"
 			],
 			[
-				"msg",
-				"msg_json"
-			],
-			[
-				"mess",
-				"message"
-			],
-			[
 				"message",
 				"message_json"
 			],
 			[
 				"cor",
 				"coroutine"
-			],
-			[
-				"send",
-				"send_message"
 			],
 			[
 				"content",
@@ -195,33 +215,24 @@
 			"file": "ergamigo.sublime-project",
 			"settings":
 			{
-				"buffer_size": 410,
+				"buffer_size": 427,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
+			"file": "/home/andy/Programming/Python/ergamigo2/.gitignore",
 			"settings":
 			{
-				"buffer_size": 10923,
+				"buffer_size": 26,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/andy/Programming/Python/ergamigo/src/test_client.html",
+			"file": "/home/andy/Programming/Python/ergamigo2/README.md",
 			"settings":
 			{
-				"buffer_size": 3823,
+				"buffer_size": 2055,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/andy/Programming/Python/ergamigo/src/todo.txt",
-			"settings":
-			{
-				"buffer_size": 1775,
-				"line_ending": "Unix",
-				"name": "todo.txt"
 			}
 		}
 	],
@@ -252,12 +263,26 @@
 	},
 	"expanded_folders":
 	[
-		"/home/andy/Programming/Python/ergamigo",
-		"/home/andy/Programming/Python/ergamigo/js_websockets",
-		"/home/andy/Programming/Python/ergamigo/test_websockets"
+		"/home/andy/Programming/Python/ergamigo2"
 	],
 	"file_history":
 	[
+		"/home/andy/Programming/Python/ergamigo2/example.csv",
+		"/home/andy/Programming/Python/ergamigo2/src/SimpleWebSocketServer/SimpleExampleServer.py",
+		"/home/andy/.cache/.fr-nvYOs0/src/Collections/JSONArrayCollection.cs",
+		"/home/andy/.cache/.fr-QrOAHH/mono/README",
+		"/home/andy/Programming/Python/ergamigo2/testing/websocket.html",
+		"/home/andy/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/andy/.config/sublime-text-3/Packages/User/Python.sublime-settings",
+		"/home/andy/.cache/.fr-ktPrRW/strokelog.py",
+		"/home/andy/Programming/Python/ergamigo2/src/pyrow/pyrow.py",
+		"/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
+		"/home/andy/Programming/Python/ergamigo2/src/SimpleWebSocketServer/SimpleWebSocketServer.py",
+		"/home/andy/Programming/Python/ergamigo2/src/SimpleWebSocketServer/__init__.py",
+		"/home/andy/Programming/Python/SimpleWebSocketServer-master/README.md",
+		"/home/andy/Programming/Python/SimpleWebSocketServer-master/websocket.html",
+		"/etc/udev/rules.d/70-persistent-net.rules",
+		"/etc/udev/rules.d/50-erg.rules",
 		"/home/andy/Programming/Javascript/gamepad_test/index.html",
 		"/home/andy/Programming/Javascript/canvas_framework/js/system/system.js",
 		"/home/andy/Programming/Javascript/canvas_framework/js/game.js",
@@ -269,7 +294,6 @@
 		"/home/andy/Programming/Python/ergamigo/src/test_client.html",
 		"/home/andy/Programming/Python/ergamigo/src/test_client.py",
 		"/home/andy/Programming/Python/ergamigo/README.md",
-		"/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
 		"/home/andy/Programming/Python/ergamigo/test_websockets/server_send.py",
 		"/home/andy/Programming/Python/ergamigo/test_websockets/client_receive.py",
 		"/home/andy/Programming/Python/ergamigo/src/python3/ergamigo.py",
@@ -308,7 +332,7 @@
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 25.0
 	},
 	"find_in_files":
 	{
@@ -322,6 +346,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"self.sendClose()",
+			"sendMessage",
+			"print",
+			"logging",
+			"ssl",
+			"sys",
+			"signal",
 			"erg_status",
 			"import_workout_data",
 			"clamp",
@@ -365,15 +396,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 410,
+						"buffer_size": 427,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								204,
-								204
+								221,
+								221
 							]
 						],
 						"settings":
@@ -389,24 +420,24 @@
 				},
 				{
 					"buffer": 1,
-					"file": "/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
+					"file": "/home/andy/Programming/Python/ergamigo2/.gitignore",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10923,
+						"buffer_size": 26,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3622,
-								3622
+								11,
+								11
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -417,59 +448,30 @@
 				},
 				{
 					"buffer": 2,
-					"file": "/home/andy/Programming/Python/ergamigo/src/test_client.html",
+					"file": "/home/andy/Programming/Python/ergamigo2/README.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3823,
+						"buffer_size": 2055,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3020,
-								3020
+								429,
+								429
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1343.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/andy/Programming/Python/ergamigo/src/todo.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1775,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1775,
-								1775
-							]
-						],
-						"settings":
-						{
-							"auto_name": "todo.txt",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

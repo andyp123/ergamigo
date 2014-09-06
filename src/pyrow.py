@@ -23,12 +23,8 @@ interface = 0
 
 def find():
 	ergs = usb.core.find(find_all=True, idVendor=c2vendorID)
-	if ergs is None:
-		raise ValueError('Ergs not found')
-		return []
-	else:
-		return list(ergs)
-
+	if ergs is None: raise ValueError('Ergs not found')
+	return ergs
 
 class pyrow:
 	
@@ -44,7 +40,7 @@ class pyrow:
 			    pass
 			else:
 			    pass
-				# print("DEBUG: usb kernel driver not on ".format(sys.platform))
+				# print "DEBUG: usb kernel driver not on " + sys.platform
 			finally:
 			    pass
 		
@@ -91,7 +87,7 @@ class pyrow:
 		monitor['heartrate'] = results['CSAFE_GETHRCUR_CMD'][0]
 
 		if forceplot:
-			datapoints = results['CSAFE_PM_GET_FORCEPLOTDATA'][0] // 2 #get amount of returned data in bytes
+			datapoints = results['CSAFE_PM_GET_FORCEPLOTDATA'][0] /2 #get amount of returned data in bytes
 			monitor['forceplot'] = results['CSAFE_PM_GET_FORCEPLOTDATA'][1:(datapoints+1)]
 			monitor['strokestate'] = results['CSAFE_PM_GET_STROKESTATE'][0]
 			
@@ -107,7 +103,7 @@ class pyrow:
 		results = this.send(command)
 		
 		forceplot = {}
-		datapoints = results['CSAFE_PM_GET_FORCEPLOTDATA'][0] // 2
+		datapoints = results['CSAFE_PM_GET_FORCEPLOTDATA'][0] / 2
 		forceplot['forceplot'] = results['CSAFE_PM_GET_FORCEPLOTDATA'][1:(datapoints+1)]
 		forceplot['strokestate'] = results['CSAFE_PM_GET_STROKESTATE'][0]
 		

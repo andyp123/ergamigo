@@ -2,7 +2,7 @@
 	<meta charset="utf-8" />
 	<title>WebSocket Test</title>
 	<script language="javascript" type="text/javascript"> 
-		var wsUri = "ws://localhost:8765/";
+		var wsUri = "ws://localhost:8000/";
 		var output;
         var MAX_Y = 10.0;
 
@@ -42,19 +42,24 @@
 				onError(evt)
 			};
 		}
+
 		function onOpen(evt) {
 			writeToScreen("CONNECTED");
 		}
+
 		function onClose(evt) {
 			writeToScreen("DISCONNECTED");
 		}
+        
 		function onMessage(evt) {
 			var msg = JSON.parse(evt.data);
              handleMessage(msg);
 		}
+
 		function onError(evt) {
 			writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
-		} 
+		}
+
         function handleMessage(msg) {
             if (msg.type === "TXT") {
                 writeToScreen('<span style="color: blue;">TXT : ' + msg.content + '</span>');
@@ -65,24 +70,30 @@
             case "STROKE_END":
                 if (msg.content.stroke_id == 0) {
                     forceplot_ctx.strokeStyle = "rgb(192,192,192)";
-                    forceplot_ctx.fillStyle = "rgb(192,192,192)";
+                    forceplot_ctx.fillStyle = "rgb(192,128,128)";
                 } else {
                     forceplot_ctx.strokeStyle = "rgb(255,255,255)";
                     forceplot_ctx.fillStyle = "rgba(192,192,192,0.333)";
                 }
                 drawForceplot(msg.content.forceplot);
+                break;
             case "WORKOUT_START":
-                //break;
+                writeToScreen("Workout started.");
+                break;
             case "WORKOUT_END":
-                //break; 
+                writeToScreen("Workout ended.");
+                break; 
             default:
+                console.log(msg.content);
                 break;
             }
         }
+
 		function doSend(message) {
 			writeToScreen("SENT: " + message); 
 			websocket.send(message);
 		}
+
 		function writeToScreen(message) {
 			var pre = document.createElement("p");
 			pre.style.wordWrap = "break-word";
