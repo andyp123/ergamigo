@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"erg",
+				"erg_server"
+			],
+			[
+				"webso",
+				"websocket_server"
+			],
+			[
+				"sleep",
+				"sleep_time_ms"
+			],
+			[
+				"conn",
+				"connection"
+			],
+			[
+				"mes",
+				"message"
+			],
+			[
+				"er",
+				"erg_process"
+			],
+			[
 				"messae",
 				"message_json"
 			],
@@ -72,14 +96,6 @@
 				"getElementById"
 			],
 			[
-				"erg",
-				"erg_id"
-			],
-			[
-				"er",
-				"erg_id"
-			],
-			[
 				"STROK",
 				"STROKE_FORCE"
 			],
@@ -110,10 +126,6 @@
 			[
 				"conten",
 				"content_str"
-			],
-			[
-				"conn",
-				"connected_ergs"
 			],
 			[
 				"output",
@@ -212,26 +224,26 @@
 	"buffers":
 	[
 		{
-			"file": "ergamigo.sublime-project",
+			"file": "/home/andy/Programming/Python/ergamigo/testing/test_client_ripples.html",
 			"settings":
 			{
-				"buffer_size": 427,
+				"buffer_size": 4000,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/andy/Programming/Python/ergamigo2/.gitignore",
+			"file": "/home/andy/Programming/Python/ergamigo/src/ergserver.py",
 			"settings":
 			{
-				"buffer_size": 26,
+				"buffer_size": 7244,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/andy/Programming/Python/ergamigo2/README.md",
+			"file": "/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
 			"settings":
 			{
-				"buffer_size": 2055,
+				"buffer_size": 5892,
 				"line_ending": "Unix"
 			}
 		}
@@ -263,10 +275,20 @@
 	},
 	"expanded_folders":
 	[
-		"/home/andy/Programming/Python/ergamigo2"
+		"/home/andy/Programming/Python/ergamigo",
+		"/home/andy/Programming/Python/ergamigo/_sublime",
+		"/home/andy/Programming/Python/ergamigo/src",
+		"/home/andy/Programming/Python/ergamigo/src/SimpleWebSocketServer",
+		"/home/andy/Programming/Python/ergamigo/testing"
 	],
 	"file_history":
 	[
+		"/home/andy/Programming/Python/ergamigo/src/SimpleWebSocketServer/SimpleWebSocketServer.py",
+		"/home/andy/Programming/Python/ergamigo/src/ergserver.py",
+		"/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
+		"/home/andy/Programming/Python/ergamigo/_sublime/ergamigo.sublime-project",
+		"/home/andy/Programming/Python/ergamigo2/.gitignore",
+		"/home/andy/Programming/Python/ergamigo2/README.md",
 		"/home/andy/Programming/Python/ergamigo2/example.csv",
 		"/home/andy/Programming/Python/ergamigo2/src/SimpleWebSocketServer/SimpleExampleServer.py",
 		"/home/andy/.cache/.fr-nvYOs0/src/Collections/JSONArrayCollection.cs",
@@ -276,7 +298,6 @@
 		"/home/andy/.config/sublime-text-3/Packages/User/Python.sublime-settings",
 		"/home/andy/.cache/.fr-ktPrRW/strokelog.py",
 		"/home/andy/Programming/Python/ergamigo2/src/pyrow/pyrow.py",
-		"/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
 		"/home/andy/Programming/Python/ergamigo2/src/SimpleWebSocketServer/SimpleWebSocketServer.py",
 		"/home/andy/Programming/Python/ergamigo2/src/SimpleWebSocketServer/__init__.py",
 		"/home/andy/Programming/Python/SimpleWebSocketServer-master/README.md",
@@ -332,7 +353,7 @@
 	],
 	"find":
 	{
-		"height": 25.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -346,6 +367,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"server",
+			"object",
+			"class",
+			"sendJSON",
+			"[",
+			"process_map",
+			"ergserver",
+			"servefor",
+			" server",
+			"connections",
+			"WebSocket(",
+			"sendbuffer",
+			"connections",
+			"self",
 			"self.sendClose()",
 			"sendMessage",
 			"print",
@@ -376,6 +411,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"server",
 			"'"
 		],
 		"reverse": false,
@@ -392,24 +428,24 @@
 			[
 				{
 					"buffer": 0,
-					"file": "ergamigo.sublime-project",
+					"file": "/home/andy/Programming/Python/ergamigo/testing/test_client_ripples.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 427,
+						"buffer_size": 4000,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								221,
-								221
+								129,
+								129
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -420,27 +456,27 @@
 				},
 				{
 					"buffer": 1,
-					"file": "/home/andy/Programming/Python/ergamigo2/.gitignore",
+					"file": "/home/andy/Programming/Python/ergamigo/src/ergserver.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 26,
+						"buffer_size": 7244,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								11,
-								11
+								2544,
+								2544
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 843.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -448,27 +484,27 @@
 				},
 				{
 					"buffer": 2,
-					"file": "/home/andy/Programming/Python/ergamigo2/README.md",
+					"file": "/home/andy/Programming/Python/ergamigo/src/ergamigo.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2055,
+						"buffer_size": 5892,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								429,
-								429
+								5637,
+								5637
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1784.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -515,7 +551,7 @@
 	"project": "ergamigo.sublime-project",
 	"replace":
 	{
-		"height": 46.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":
