@@ -1,140 +1,160 @@
 <!DOCTYPE html>
+<html>
 	<meta charset="utf-8" />
-	<title>WebSocket Test</title>
-	<script language="javascript" type="text/javascript"> 
-		var wsUri = "ws://localhost:8000/";
-		var output;
-        var MAX_Y = 10.0;
+	<title>ErgServer: WebSocket Test</title>
 
-        var forceplot_canvas = null;
-        var forceplot_ctx = null;
-
-		function init() {
-            forceplot_canvas = document.getElementById("forceplot_canvas");
-            forceplot_ctx = forceplot_canvas.getContext("2d");
-            forceplot_ctx.fillStyle = "rgb(192,192,192)";
-            forceplot_ctx.strokeStyle = "rgb(0,0,0)";
-            forceplot_ctx.lineWidth = 3;
-
-			output = document.getElementById("output");
-
-            //test forceplot
-            forceplot = [0,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,0];
-            drawForceplot(forceplot);
-
-			testWebSocket();
-		}
-
-        var stroke_active = false;
-
-		function testWebSocket() {
-			websocket = new WebSocket(wsUri);
-			websocket.onopen = function(evt) {
-				onOpen(evt)
-			};
-			websocket.onclose = function(evt) {
-				onClose(evt)
-			};
-			websocket.onmessage = function(evt) {
-				onMessage(evt)
-			};
-			websocket.onerror = function(evt) {
-				onError(evt)
-			};
-		}
-
-		function onOpen(evt) {
-			writeToScreen("CONNECTED");
-		}
-
-		function onClose(evt) {
-			writeToScreen("DISCONNECTED");
-		}
-        
-		function onMessage(evt) {
-			var msg = JSON.parse(evt.data);
-             handleMessage(msg);
-		}
-
-		function onError(evt) {
-			writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
-		}
-
-        function handleMessage(msg) {
-            if (msg.type === "TXT") {
-                writeToScreen('<span style="color: blue;">TXT : ' + msg.content + '</span>');
-                return;
-            }
-
-            switch(msg.type) {
-            case "STROKE_END":
-                if (msg.content.stroke_id == 0) {
-                    forceplot_ctx.strokeStyle = "rgb(192,192,192)";
-                    forceplot_ctx.fillStyle = "rgb(192,128,128)";
-                } else {
-                    forceplot_ctx.strokeStyle = "rgb(255,255,255)";
-                    forceplot_ctx.fillStyle = "rgba(192,192,192,0.333)";
-                }
-                drawForceplot(msg.content.forceplot);
-                break;
-            case "WORKOUT_START":
-                writeToScreen("Workout started.");
-                break;
-            case "WORKOUT_END":
-                writeToScreen("Workout ended.");
-                break; 
-            default:
-                console.log(msg.content);
-                break;
-            }
-        }
-
-		function doSend(message) {
-			writeToScreen("SENT: " + message); 
-			websocket.send(message);
-		}
-
-		function writeToScreen(message) {
-			var pre = document.createElement("p");
-			pre.style.wordWrap = "break-word";
-			pre.innerHTML = message;
-			output.appendChild(pre);
-		}
-		window.addEventListener("load", init, false);
-
-        function drawForceplot(forceplot) {
-            var canvas = forceplot_canvas;
-            var ctx = forceplot_ctx;
-
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            if (forceplot.length > 1) {
-                var ymax = Math.max.apply(null, forceplot);
-                if (ymax > MAX_Y) MAX_Y = ymax;
-                var yscale = (canvas.height - 30.0) / MAX_Y;
-
-                var x1 = 0.0;
-                var y1 = canvas.height - forceplot[0] * yscale;
-
-                ctx.beginPath();
-                ctx.moveTo(x1, y1);
-
-                var x_increment = canvas.width / (forceplot.length - 1);
-                for (var i = 1; i < forceplot.length; ++i) {
-                    var x2 = i * x_increment;
-                    var y2 = canvas.height - forceplot[i] * yscale;
-                    ctx.lineTo(x2, y2);
-                    x1 = x2;
-                    y1 = y2;
-                }
-
-                ctx.stroke();
-            }
-        }
-	</script>
-
-	<h2>WebSocket Test</h2>
-    <div>
+<body style="background-color: #444444; color: #eeeeee; font-family: sans-serif">
+    <div style="width: 512px">
+        <div>
+            <form>
+                Host: <input type="text" id="input_host" value="127.0.0.1">
+                Port: <input type="text" id="input_port" value="8000" style="width: 50px">
+                <button type="button" onclick="testWebSocket()">Connect</button>
+                <button type="button" onclick="closeWebSocket()">Disconnect</button>
+            </form>
+        </div>
         <canvas id="forceplot_canvas" width="512" height="384"></canvas>
+        <div id="output" style="background-color: #222222; font-size: 0.8em; font-family: monospace"></div> 
     </div>
-	<div id="output"></div> 
+</body>
+
+<script language="javascript" type="text/javascript"> 
+// websocket globals
+var wsUri = "ws://localhost:8000/";
+var websocket = undefined;
+
+// output related globals
+var output;
+var MAX_Y = 10.0;
+var forceplot_canvas = null;
+var forceplot_ctx = null;
+
+function init() {
+    forceplot_canvas = document.getElementById("forceplot_canvas");
+    forceplot_ctx = forceplot_canvas.getContext("2d");
+    forceplot_ctx.strokeStyle = "rgb(0,0,0)";
+    forceplot_ctx.fillStyle = "rgb(192,192,192)";
+    forceplot_ctx.lineWidth = 3;
+
+	output = document.getElementById("output");
+
+    //test forceplot
+    forceplot = [0,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,0];
+    drawForceplot(forceplot);
+
+	testWebSocket();
+}
+
+function closeWebSocket() {
+    if (websocket !== undefined) {
+        websocket.close();
+    }
+}
+
+function testWebSocket() {
+    var host = document.getElementById('input_host').value;
+    var port = document.getElementById('input_port').value;
+    wsUri = "ws://"
+      + ((host == "") ? "127.0.0.1" : host) + ":"
+      + ((port == "") ? "8000" : port) + "/";
+
+    closeWebSocket();
+	websocket = new WebSocket(wsUri);
+
+	websocket.onopen = function(evt) {
+        writeToScreen("CONNECTED");
+	};
+
+	websocket.onclose = function(evt) {
+		writeToScreen("DISCONNECTED");
+	};
+
+	websocket.onmessage = function(evt) {
+        var msg = JSON.parse(evt.data);
+        handleMessage(msg);
+	};
+
+	websocket.onerror = function(evt) {
+        writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+        console.log("ERROR:")
+        console.log(evt);
+	};
+}
+
+function handleMessage(msg) {
+    if (msg.type === "TXT") {
+        writeToScreen('<span style="color: blue;">TXT : ' + msg.content + '</span>');
+        return;
+    }
+
+    switch(msg.type) {
+    case "STROKE_END":
+        if (msg.content.stroke_id == 0) {
+            forceplot_ctx.strokeStyle = "rgb(0,0,0)";
+            forceplot_ctx.fillStyle = "rgb(192,192,192)";
+        } else {
+            forceplot_ctx.strokeStyle = "rgb(255,255,255)";
+            forceplot_ctx.fillStyle = "rgba(192,192,192,0.333)";
+        }
+        drawForceplot(msg.content.forceplot);
+
+        var m = msg.content.monitor;
+        var text = "[" + msg.content.stroke_id + "] time: " + m.time +
+            ", distance: " + m.distance + ", pace: " + m.pace;
+        writeToScreen('<span style="color: #00ee00;">' + text + '</span');
+        break;
+    case "WORKOUT_START":
+        writeToScreen("Workout started.");
+        break;
+    case "WORKOUT_END":
+        writeToScreen("Workout ended.");
+        break; 
+    default:
+        //console.log(msg);
+        break;
+    }
+}
+
+function writeToScreen(message) {
+	var pre = document.createElement("p");
+	pre.style.wordWrap = "break-word";
+    pre.style.margin = 0;
+    pre.style.padding_top = 0;
+	pre.innerHTML = message;
+	output.appendChild(pre);
+}
+
+function drawForceplot(forceplot) {
+    var canvas = forceplot_canvas;
+    var ctx = forceplot_ctx;
+
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (forceplot.length > 1) {
+        var ymax = Math.max.apply(null, forceplot);
+        if (ymax > MAX_Y) MAX_Y = ymax;
+        var yscale = (canvas.height - 30.0) / MAX_Y;
+
+        var x1 = 0.0;
+        var y1 = canvas.height - forceplot[0] * yscale;
+
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+
+        var x_increment = canvas.width / (forceplot.length - 1);
+        for (var i = 1; i < forceplot.length; ++i) {
+            var x2 = i * x_increment;
+            var y2 = canvas.height - forceplot[i] * yscale;
+            ctx.lineTo(x2, y2);
+            x1 = x2;
+            y1 = y2;
+        }
+
+        ctx.stroke();
+    }
+}
+
+
+window.addEventListener("load", init, false);
+</script>
+

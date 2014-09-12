@@ -8,24 +8,22 @@
 # ==============================================================================
 
 # core
-import pyrow    # handles connection to ergs
-import usb.core # for USBError
+import pyrow.pyrow as pyrow # handles connection to ergs
 import time     # for sleep
-import datetime # for getting date and time (write to logs)
 import json     # for converting data into json strings
+import sys      # sys.exit
+
 # server
-import signal, sys, ssl, logging
+import signal
 from optparse import OptionParser
 from SimpleWebSocketServer.SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
-from multiprocessing import Process
+from multiprocessing import Process, Queue
 
 # ==============================================================================
 # CLIENT CONNECTION CLASS
 # ==============================================================================
 
 class ErgSocket(WebSocket):
-
-    erg_server = None
 
     # receive message from client
     def handleMessage(self):
@@ -43,14 +41,17 @@ class ErgSocket(WebSocket):
         print("{}: closed".format(self.address))
 
 
+
 # ==============================================================================
-# ERG MONITORING PROCESS FUNCTIONS
+# CORE FUNCTIONS
 # ==============================================================================
 
-# send JSON message to all connected clients
-def sendJSON(server, msg_content, msg_type="TXT", log=True):
-    message = { 'type': msg_type, 'content':  msg_content }
+# take an object, create a formatted message and queue it
+def queue_message(message_queue, msg_content, msg_type="TXT", log=True):
+    message = { 'type': msg_type, 'content': msg_content, 'time': time.clock() }
     message_json = json.dumps(message)
+
+    message_queue.put(message_json)
 
     if log == True:
         if msg_type == "TXT":
@@ -58,33 +59,21 @@ def sendJSON(server, msg_content, msg_type="TXT", log=True):
         else:
             print("[SEND] {} ({} bytes)".format(msg_type, len(message_json)))
 
-    clients = server.connections.values()
-    # print("Sending to {} clients.".format(len(clients)))
-    for client in clients:
-        try:
-            client.sendMessage(message_json)
-        except:
-            print("[ERROR] Send failed to client: {}\n----------\n{}\n----------\nClosing connection.".format(client.address, message_json))
-            client.sendClose()
-
 # monitor a connected erg and send messages to clients connected to the server
-def monitor_erg(erg, server):
+def monitor_erg(message_queue, erg):
     try:
-        server = ErgSocket.erg_server
-
-        sleep_time_ms = 3
-        sleep_time = 1.0 / float(sleep_time_ms)
+        sleep_time_ms = 5
+        sleep_time = float(sleep_time_ms) / 1000.0
 
         erg_info = pyrow.pyrow.getErg(erg)
         erg_status = pyrow.pyrow.getStatus(erg)
         erg_id = erg_info['serial']
 
         message = "Concept 2 erg connected (model {}, serial: {})".format(erg_info['model'], erg_id)
-        # print(message)
-        sendJSON(server, message);
+        queue_message(message_queue, message);
 
         # wait for workout to begin, then send stroke data
-        sendJSON(server, "Waiting for workout to begin...")
+        queue_message(message_queue, "Waiting for workout to begin...")
 
         # keep monitoring indefinitely
         while True:
@@ -95,7 +84,7 @@ def monitor_erg(erg, server):
 
             # send workout start message
             monitor = erg.getMonitor()
-            sendJSON(server, { 'erg_id' : erg_id, 'monitor' : monitor, 'workout' : workout }, msg_type="WORKOUT_START")
+            queue_message(message_queue, { 'erg_id' : erg_id, 'monitor' : monitor, 'workout' : workout }, msg_type="WORKOUT_START")
 
             # record workout
             stroke_id = 0
@@ -106,20 +95,20 @@ def monitor_erg(erg, server):
                 monitor = erg.getMonitor()
 
                 # stroke start message
-                sendJSON(server, { 'erg_id' : erg_id, 'stroke_id' : stroke_id, 'monitor': monitor }, msg_type="STROKE_START", log=False)
-                sendJSON(server, { 'erg_id' : erg_id, 'stroke_id' : stroke_id, 'force' : forceplot['forceplot'] }, msg_type="STROKE_FORCE", log=False)
+                queue_message(message_queue, { 'erg_id': erg_id, 'stroke_id': stroke_id, 'monitor': monitor }, msg_type="STROKE_START", log=False)
+                queue_message(message_queue, { 'erg_id': erg_id, 'stroke_id': stroke_id, 'time': monitor['time'], 'force': forceplot['forceplot'] }, msg_type="STROKE_FORCE", log=False)
                 
                 # loop during drive (and make sure we get the end of the stroke)
                 while True:
                     monitor = erg.getMonitor()
                     forceplot = erg.getForcePlot()
                     force.extend(forceplot['forceplot'])
-                    sendJSON(server, { 'erg_id' : erg_id, 'stroke_id' : stroke_id, 'time' : monitor['time'], 'forceplot' : forceplot['forceplot'] }, msg_type="STROKE_FORCE", log=False)
+                    queue_message(message_queue, { 'erg_id': erg_id, 'stroke_id': stroke_id, 'time': monitor['time'], 'forceplot': forceplot['forceplot'] }, msg_type="STROKE_FORCE", log=False)
                     if forceplot['strokestate'] != 2:
                         break
 
                 monitor = erg.getMonitor()      # get monitor data for end of stroke
-                sendJSON(server, { 'erg_id' : erg_id, 'stroke_id' : stroke_id, 'monitor' : monitor, 'forceplot' : force }, msg_type="STROKE_END", log=False)
+                queue_message(message_queue, { 'erg_id': erg_id, 'stroke_id': stroke_id, 'monitor': monitor, 'forceplot': force }, msg_type="STROKE_END", log=False)
 
                 print("[{}] time: {}, distance: {}, pace: {}".format(stroke_id, monitor['time'], monitor['distance'], monitor['pace']))
 
@@ -132,50 +121,56 @@ def monitor_erg(erg, server):
 
             workout = erg.getWorkout()
             monitor = erg.getMonitor()
-            sendJSON(server, { 'erg_id' : erg_id, 'monitor' : monitor, 'workout' : workout }, msg_type="WORKOUT_END")
+            queue_message(message_queue, { 'erg_id': erg_id, 'monitor': monitor, 'workout': workout }, msg_type="WORKOUT_END")
 
-    except Exception as n:
-        print(n)
+    except Exception as e:
+        print(e)
         sys.exit(0)
 
-
-# ==============================================================================
-# SYSTEM INITIALIZATION AND ERG CONNECTION
-# ==============================================================================
-
-erg_server = None
-
-if __name__ == "__main__":
+def main():
     # handle command line options
     parser = OptionParser(usage="usage: %prog [options]", version="%prog 1.0")
     parser.add_option("--host", default='', type='string', action="store", dest="host", help="hostname (localhost)")
     parser.add_option("--port", default=8000, type='int', action="store", dest="port", help="port (8000)")
     (options, args) = parser.parse_args()
-
+    
     print("Welcome to ErgServer!")
 
     # initialize connection to erg
     connected_ergs = pyrow.find()
     if len(connected_ergs) == 0:
         print("No ergs found.")
-        sys.exit(0);
     else:
-        # start the websocket server to accept client connections
-        ErgSocket.erg_server = SimpleWebSocketServer(options.host, options.port, ErgSocket)
+        print("{} erg(s) found. Starting ErgServer.".format(len(connected_ergs)))
+        print("(NOTE: This will run forever. Press ctrl+c to quit)")
 
-        # connect to erg and monitor it using a new process
-        print("{} erg(s) found. Starting monitoring process.".format(len(connected_ergs)))
-        erg = pyrow.pyrow(connected_ergs[0])
-        erg_process = Process(target=monitor_erg, args=(erg,ErgSocket.erg_server,))
-        erg_process.start()
+        try:
+            message_queue = Queue(20)
 
-        # set up the quit callback and start the server
-        def close_sig_handler(signal, frame):
-            print("Exiting system.")
-            if erg_process != None:
-                erg_process.terminate()
-            ErgSocket.erg_server.close()
-            sys.exit(0)
+            # connect to erg and monitor it using a new process
+            erg = pyrow.pyrow(connected_ergs[0])
+            prc_monitor = Process(target=monitor_erg, args=(message_queue, erg))
+            prc_monitor.start()
 
-        signal.signal(signal.SIGINT, close_sig_handler)
-        ErgSocket.erg_server.serveforever()
+            # start the websocket server to accept client connections
+            erg_server = SimpleWebSocketServer(options.host, options.port, ErgSocket, message_queue)
+
+            def close_sig_handler(signal, frame):
+                erg_server.close()
+                sys.exit(0)
+
+            signal.signal(signal.SIGINT, close_sig_handler)
+            erg_server.serveforever()
+
+        except:
+            pass
+
+    print("Closing ErgServer. See you next time!")
+    try:
+        prc_monitor.terminate()
+    except:
+        pass
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()

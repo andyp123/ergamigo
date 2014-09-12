@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-#Copyright (c) 2011, Sam Gambrell
-#Licensed under the Simplified BSD License.
-#NOTE: This code has not been thoroughly tested and may not function as advertised.
+# Copyright (c) 2011, Sam Gambrell
+# Licensed under the Simplified BSD License.
+# NOTE: This code has not been thoroughly tested and may not function as advertised.
 #   Please report and findings to the author so that they may be addressed in a stable release. 
-
+# NOTE2: This code has been modified to work with Python 2 and 3 by me, Andrew Palmer
+#   and may be broken as a result. It works to the best of my knowledge though.
 
 import usb.core
 import usb.util
@@ -23,8 +24,12 @@ interface = 0
 
 def find():
 	ergs = usb.core.find(find_all=True, idVendor=c2vendorID)
-	if ergs is None: raise ValueError('Ergs not found')
-	return ergs
+	if ergs is None:
+		raise ValueError('Ergs not found')
+		return []
+	else:
+		return list(ergs)
+
 
 class pyrow:
 	
@@ -40,7 +45,7 @@ class pyrow:
 			    pass
 			else:
 			    pass
-				# print "DEBUG: usb kernel driver not on " + sys.platform
+				# print("DEBUG: usb kernel driver not on ".format(sys.platform))
 			finally:
 			    pass
 		
@@ -87,7 +92,7 @@ class pyrow:
 		monitor['heartrate'] = results['CSAFE_GETHRCUR_CMD'][0]
 
 		if forceplot:
-			datapoints = results['CSAFE_PM_GET_FORCEPLOTDATA'][0] /2 #get amount of returned data in bytes
+			datapoints = results['CSAFE_PM_GET_FORCEPLOTDATA'][0] // 2 #get amount of returned data in bytes
 			monitor['forceplot'] = results['CSAFE_PM_GET_FORCEPLOTDATA'][1:(datapoints+1)]
 			monitor['strokestate'] = results['CSAFE_PM_GET_STROKESTATE'][0]
 			
@@ -103,7 +108,7 @@ class pyrow:
 		results = this.send(command)
 		
 		forceplot = {}
-		datapoints = results['CSAFE_PM_GET_FORCEPLOTDATA'][0] / 2
+		datapoints = results['CSAFE_PM_GET_FORCEPLOTDATA'][0] // 2
 		forceplot['forceplot'] = results['CSAFE_PM_GET_FORCEPLOTDATA'][1:(datapoints+1)]
 		forceplot['strokestate'] = results['CSAFE_PM_GET_STROKESTATE'][0]
 		
