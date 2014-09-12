@@ -21,19 +21,20 @@ Installation:
 2. Make sure libusb is installed. It is installed by default in many linux distros, but you need to install on MacOS and Windows. (http://www.libusb.org/)
 3. Install pyusb 1.0+. (http://walac.github.io/pyusb/)
 4. From a terminal, move into the directory containing 'ergserver.py' and run it with a Concept 2 erg connected. If you use the erg with the program running, you should see messages at the console.
+5. With a server open, run test_client.html in Chrome. If all has gone successfully and you do some rowing, force curves will be drawn on screen!
 
 By default, running ergserver.py with no command line arguments will start a websocket server with your machines ip address on port 8000. This can be changed by running with options:<br>
---host '127.0.0.1' - set the host ip manually
+--host '127.0.0.1' - set the host ip manually<br>
 --port 8000 - set the port manually
 
-NOTE:
------
-You may not be able to read from the USB due to insufficient permissions. To fix this you can either:
+**NOTE**: You may not be able to read from the USB due to insufficient permissions. To fix this you can either:
 
 1. run as root 'sudo python ergserver.py'
 2. set up permission to read from the concept 2 erg using udev rules.<br>
 Create a file in /etc/udev/rules.d/ named 'c2erg.rules' containing the following:<br>
 SUBSYSTEM=="usb", ATTR{idProduct}=="000?", ATTR{idVendor}=="17a4", MODE="0666", GROUP="all"
+
+I can't seem to get this to work at all any more, so maybe running with sudo is the only way now.
 
 To list connected usb devices and check the vendor and product codes, type 'lsusb' at the terminal.
 'lsusb -v' prints verbose information.
