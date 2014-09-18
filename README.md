@@ -32,10 +32,10 @@ By default, running ergserver.py with no command line arguments will start a web
 1. run as root 'sudo python ergserver.py'
 2. set up permission to read from the concept 2 erg using udev rules.<br>
 Create a file in /etc/udev/rules.d/ named 'c2erg.rules' containing the following:<br>
-SUBSYSTEM=="usb", ATTR{idProduct}=="000?", ATTR{idVendor}=="17a4", MODE="0666", GROUP="all"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", MODE="0666", ATTRS{idVendor}=="17a4"
 
-I can't seem to get this to work at all any more, so maybe running with sudo is the only way now.
+This *should* enable access to the erg (actually all connected Concept 2 devices) without having to run as root.
 
-To list connected usb devices and check the vendor and product codes, type 'lsusb' at the terminal.
+TIPS: To list connected usb devices and check the vendor and product codes, type 'lsusb' at the terminal.
 'lsusb -v' prints verbose information.
-To reload the udev rules, enter 'udevadm control --reload-rules' at the terminal.
+To reload the udev rules, enter 'udevadm control --reload-rules' at the terminal. You'll probably need to unplug the erg, reload, then reconnect for this to work.
