@@ -39,3 +39,16 @@ This *should* enable access to the erg (actually all connected Concept 2 devices
 TIPS: To list connected usb devices and check the vendor and product codes, type 'lsusb' at the terminal.
 'lsusb -v' prints verbose information.
 To reload the udev rules, enter 'udevadm control --reload-rules' at the terminal. You'll probably need to unplug the erg, reload, then reconnect for this to work.
+
+Raspberry Pi Installation Notes:
+--------------------------------
+I'm only part way into getting ergserver to work on Raspberry pi, but so far it looks like the same setup procedure should work. I will add details regarding erg connection once I have tested it.
+
+Python may need to be upgraded manually, since the version on the version of Raspbian I am using is a little old and may not work with SimpleWebSockets.
+
+Install USB related dependencies with:
+apt-get install libusb-1.0-0
+apt-get install python-pip
+pip install pyusb
+
+**NOTE**: Do not install pyusb with the apt-get command, since it will most likely be an out of date version (0.4), which will lead to errors about usb.core not existing when you try to run ergserver.py. On the most recent versions of pip, you may encounter issues relating to there not being the required version, so you will need to enable pre-release versions with 'pip install --pre pyusb'.
