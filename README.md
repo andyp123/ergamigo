@@ -9,8 +9,8 @@ Requirements:
 
 + Python 2.7.6+
 + Python library 'pyusb'
-+ Python library 'pyrow' (included)
-+ Python library 'SimpleWebSockets' (included)
++ Python library 'pyrow' (http://www.newhavenrowingclub.org/pyrow/ - included)
++ Python library 'SimpleWebSockets' (http://opiate.github.io/SimpleWebSocketServer/ - included)
 
 pyrow is Copyright (c) 2011, Sam Gambrell. Licensed under the simplified BSD license.<br>
 SimpleWebSockets is Copyright (c) 2013, Dave P. Licensed under the MIT license.
